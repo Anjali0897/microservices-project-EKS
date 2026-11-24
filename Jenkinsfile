@@ -1,18 +1,12 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'mymaven'
-    }
-
-    stages {
-
+    stages{
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build'
             }
         }
-
         stage('CQA') {
             steps {
                 script {
