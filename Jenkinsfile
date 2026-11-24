@@ -1,7 +1,18 @@
 pipeline {
-    agent any
+    agent {
+        label 'slave-master'
+    }
+
+    tools {
+        maven 'mymaven'
+    }
 
     stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
         stage('CQA'){
             steps{
                 script{
