@@ -2,6 +2,21 @@ pipeline {
     agent any
 
     stages {
+        stage('CQA'){
+            steps{
+                script{
+                    def scannerHome = tool 'mysonar'
+                    withSonarQubeEnv('mysonar'){
+                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=myproject -Dsonar.sources=."
+                    }
+                }
+            }
+        }
+        stage('QualityGate'){
+            steps{
+                waitForQualityGate abortPipeline: true, credentialsId: 'sonar-password'
+            }
+        }  
         stage('Build & Tag Docker Image') {
             steps {
                 script {
