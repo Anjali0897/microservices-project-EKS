@@ -19,7 +19,7 @@ pipeline {
                 script{
                     def scannerHome = tool 'mysonar'
                     withSonarQubeEnv('mysonar'){
-                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=myproject -Dsonar.sources=."
+                         sh "mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=myproject"
                     }
                 }
             }
