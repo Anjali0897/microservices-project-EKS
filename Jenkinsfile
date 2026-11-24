@@ -1,7 +1,5 @@
 pipeline {
-     agent {
-        label 'slave-master'
-    }
+    agent
 
     tools {
         maven 'mymaven'
