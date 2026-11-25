@@ -1,15 +1,22 @@
 pipeline {
     agent any
     stages{
-        stage('CQA'){
-            steps{
-                script{
-                    def scannerHome = tool 'mysonar'
-                    withSonarQubeEnv('mysonar'){
-                         sh "mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=myproject"
-                    }
-                }
-            }
+        stage('CQA') {
+            steps {
+                script {
+                    withSonarQubeEnv('mysonar') {
+                        dir('src') {
+                            sh '''
+                               dotnet sonarscanner begin /k:"myproject" \
+                               /d:sonar.host.url="$SONAR_HOST_URL" \
+                               /d:sonar.token="$SONAR_AUTH_TOKEN"
+                               dotnet build cartservice.csproj
+                               dotnet sonarscanner end /d:sonar.token="$SONAR_AUTH_TOKEN"
+                              '''
+                           }
+                      }
+                  }
+              }
         }
         stage('QualityGate'){
             steps{
