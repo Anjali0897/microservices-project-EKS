@@ -11,7 +11,7 @@ pipeline {
                                /d:sonar.host.url="http://3.134.77.197:9000/" \
                                /d:sonar.token="sqa_735e3f22d73ed83d9ce22019efa90fa65af3bcf2"
                                dotnet build cartservice.csproj
-                               dotnet sonarscanner end /d:sonar.token="$SONAR_AUTH_TOKEN"
+                               dotnet sonarscanner end /d:sonar.token="sqa_735e3f22d73ed83d9ce22019efa90fa65af3bcf2"
                               '''
                            }
                       }
